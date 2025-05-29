@@ -1,0 +1,97 @@
+{
+    "name": "SQL in Python",
+    "scopeName": "sql-in-python",
+    "injectionSelector": "L:source.python -string -comment",
+    "patterns": [
+        {
+        "include": "#sql-content"
+        }
+    ],
+    "repository": {
+        "sql-content": {
+        "begin": "((?:^|\\s)(?:r|u|f)?(?:''')|(?:r|u|f)?(?:\"\"\"))",
+        "end": "((?<=''')(''')?|(?<=\"\"\")(\"\"\")?)(?!['\"])",
+        "beginCaptures": {
+            "1": {
+            "name": "punctuation.definition.string.begin.python"
+            }
+        },
+        "endCaptures": {
+            "1": {
+            "name": "punctuation.definition.string.end.python"
+            },
+            "2": {
+            "name": "punctuation.definition.string.end.python"
+            },
+            "3": {
+            "name": "punctuation.definition.string.end.python"
+            }
+        },
+        "contentName": "source.sql.embedded.python",
+        "patterns": [
+            { "include": "#sql-keywords" },
+            { "include": "#sql-functions" },
+            { "include": "#sql-tables" },
+            { "include": "#sql-aliases" },
+            { "include": "#sql-subqueries" },
+            { "include": "#sql-variables" }
+        ]
+        },
+        "sql-keywords": {
+        "patterns": [
+            {
+            "name": "keyword.control.sql",
+            "match": "\\b(SELECT|FROM|WHERE|GROUP BY|ORDER BY|HAVING|LIMIT|OFFSET|JOIN|INNER|OUTER|LEFT|RIGHT|FULL|CROSS|ON|AS|AND|OR|NOT|IN|BETWEEN|LIKE|IS|NULL|UNION|ALL|EXCEPT|INTERSECT|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|TABLE|VIEW|INDEX|PRIMARY|KEY|FOREIGN|REFERENCES|DEFAULT|CHECK|CONSTRAINT|UNIQUE|ALTER|DROP|RENAME|TO|ADD|COLUMN|COMMIT|ROLLBACK|BEGIN|TRANSACTION|SAVEPOINT|RELEASE|CASCADE|RESTRICT|NO ACTION|SET|EXPLAIN|ANALYZE|VACUUM|REINDEX|GRANT|REVOKE|PUBLIC|CURRENT_USER|SESSION_USER|CURRENT_DATE|CURRENT_TIME|CURRENT_TIMESTAMP)\\b"
+            }
+        ]
+        },
+        "sql-functions": {
+        "patterns": [
+            {
+            "name": "support.function.sql",
+            "match": "\\b(AVG|COUNT|FIRST|LAST|MAX|MIN|SUM|UCASE|LCASE|MID|LEN|ROUND|NOW|FORMAT|COALESCE|IFNULL|ISNULL|NVL)\\b"
+            }
+        ]
+        },
+        "sql-tables": {
+        "patterns": [
+            {
+            "name": "entity.name.table.sql",
+            "match": "FROM\\s+([a-zA-Z_][a-zA-Z0-9_]*)"
+            },
+            {
+            "name": "entity.name.table.sql",
+            "match": "JOIN\\s+([a-zA-Z_][a-zA-Z0-9_]*)"
+            }
+        ]
+        },
+        "sql-aliases": {
+        "patterns": [
+            {
+            "name": "variable.other.alias.sql",
+            "match": "AS\\s+([a-zA-Z_][a-zA-Z0-9_]*)"
+            }
+        ]
+        },
+        "sql-subqueries": {
+        "patterns": [
+            {
+            "name": "meta.subquery.sql",
+            "begin": "\\(",
+            "end": "\\)",
+            "patterns": [
+                { "include": "#sql-keywords" }
+            ]
+            }
+        ]
+        },
+        "sql-variables": {
+        "patterns": [
+            {
+            "name": "variable.parameter.sql",
+            "match": "%\\([a-zA-Z_][a-zA-Z0-9_]*\\)s"
+            }
+        ]
+        }
+    }
+}
